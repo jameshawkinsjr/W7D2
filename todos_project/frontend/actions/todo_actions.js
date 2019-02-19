@@ -1,3 +1,5 @@
+import * as APIUtil from '../util/todo_api_utils'
+
 export const RECEIVE_TODOS = 'RECEIVE_TODOS';
 export const RECEIVE_TODO = 'RECEIVE_TODO';
 
@@ -11,5 +13,7 @@ export const receiveTodo = todo => ({
     todo
 });
 
-// window.receiveTodo = receiveTodo;
-// window.receiveTodos = receiveTodos;
+export const fetchTodos = () => dispatch => (
+    APIUtil.fetchTodos()
+    .then( todos => dispatch(receiveTodos(todos)))
+)

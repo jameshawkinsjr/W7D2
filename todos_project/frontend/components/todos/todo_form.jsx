@@ -2,7 +2,7 @@ import React from 'react';
 import { uniqueId } from '../../util/utilities'
 
 
-class TodoForm extends React.Component {
+export default class TodoForm extends React.Component {
     constructor(props){
         super(props);
         this.state = {
@@ -14,6 +14,7 @@ class TodoForm extends React.Component {
 
         this.updateTitle = this.updateTitle.bind(this);
         this.updateBody = this.updateBody.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     updateTitle(event) {
@@ -24,9 +25,15 @@ class TodoForm extends React.Component {
         this.setState({body: event.currentTarget.value});
     }
 
+    handleSubmit(e) {
+        e.preventDefault();
+        this.props.receiveTodo(this.state);
+        this.setState({body: "", title: "", id: uniqueId()})
+    }
+
     render(){
         return (
-            <form>
+            <form onSubmit={this.handleSubmit}>
                 <label> Title
                     <input onChange={this.updateTitle}  type="text" value={this.state.title}/>
                 </label>

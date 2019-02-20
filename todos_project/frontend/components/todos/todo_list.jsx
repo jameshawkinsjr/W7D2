@@ -26,7 +26,7 @@ export default class TodoList extends React.Component {
                     <TodoListItem key={todo.id} todo={todo} />
                 ))
                 }
-                <TodoForm createTodo={this.props.createTodo} />
+                <TodoForm clearErrors={this.props.clearErrors} createTodo={this.props.createTodo} errors={this.props.errors} />
             </>
         )
     }

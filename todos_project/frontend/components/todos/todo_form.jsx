@@ -8,8 +8,7 @@ export default class TodoForm extends React.Component {
         this.state = {
             title: "",
             body: "",
-            done: false,
-            id: uniqueId()
+            done: false
         };
 
 
@@ -24,13 +23,16 @@ export default class TodoForm extends React.Component {
     handleSubmit(e) {
         e.preventDefault();
         this.props.createTodo(this.state).then(
-            () => this.setState({ body: "", title: "" })
+            () => {
+                this.setState({ body: "", title: "" })
+                this.props.clearErrors();
+            }
         )
-        
     }
 
     render(){
         return (
+            
             <form onSubmit={this.handleSubmit}>
                 <label> Title
                     <input onChange={ (e) => this.update('title', e)}  type="text" value={this.state.title}/>
@@ -42,6 +44,7 @@ export default class TodoForm extends React.Component {
                 </label>
 
                 <button>Submit</button>
+                {this.props.errors.errors.map(error => <div> {error} </div>)}
             </form>
         )
     }

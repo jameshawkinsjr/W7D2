@@ -8,39 +8,37 @@ export default class TodoForm extends React.Component {
         this.state = {
             title: "",
             body: "",
-            completed: false,
+            done: false,
             id: uniqueId()
         };
 
-        this.updateTitle = this.updateTitle.bind(this);
-        this.updateBody = this.updateBody.bind(this);
+
+        this.update = this.update.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-    updateTitle(event) {
-        this.setState({title: event.currentTarget.value});
-    }
-
-    updateBody(event) {
-        this.setState({body: event.currentTarget.value});
+    update(label, event) {
+        this.setState({[label]: event.currentTarget.value});
     }
 
     handleSubmit(e) {
         e.preventDefault();
-        this.props.receiveTodo(this.state);
-        this.setState({body: "", title: "", id: uniqueId()})
+        this.props.createTodo(this.state).then(
+            () => this.setState({ body: "", title: "" })
+        )
+        
     }
 
     render(){
         return (
             <form onSubmit={this.handleSubmit}>
                 <label> Title
-                    <input onChange={this.updateTitle}  type="text" value={this.state.title}/>
+                    <input onChange={ (e) => this.update('title', e)}  type="text" value={this.state.title}/>
                 </label>
 
 
                 <label> Body:
-                    <input onChange={this.updateBody} type="text" value={this.state.body}/>
+                    <input onChange={(e) => this.update('body', e)} type="text" value={this.state.body}/>
                 </label>
 
                 <button>Submit</button>

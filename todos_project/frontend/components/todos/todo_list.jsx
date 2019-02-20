@@ -10,13 +10,24 @@ const TodoListItem = ({ todo }) => (
     </ul>
 )
 
-export default (props) => (
-    <>
-            {props.todos.map(todo => (  
-                <TodoListItem key={todo.id} todo={todo} />
-            ))
-            }
-        <TodoForm receiveTodo={props.receiveTodo}/>
-    </>
-)
+export default class TodoList extends React.Component {
+    constructor(props) {
+        super(props);
+    }
 
+    componentDidMount() {
+        this.props.fetchTodos();
+    }
+
+    render() {
+        return (
+            <>
+                {this.props.todos.map(todo => (
+                    <TodoListItem key={todo.id} todo={todo} />
+                ))
+                }
+                <TodoForm createTodo={this.props.createTodo} />
+            </>
+        )
+    }
+}

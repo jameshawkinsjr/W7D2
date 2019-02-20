@@ -4,5 +4,10 @@ export const fetchTodos = () => (
         url: '/api/todos'
     })
 )
-
-window.fetchTodos = fetchTodos;
+export const createTodo = ( {body, title, done} ) => (
+    $.ajax({
+        method: 'POST',
+        url: '/api/todos',
+        data: { todo: {body, title, done}}
+    })
+)
